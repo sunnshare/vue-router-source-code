@@ -1,9 +1,36 @@
+import createMatcher from "./create-matcher";
+import HashHistory from "./history/hash";
+import BrowserHistory from "./history/history";
 import install, { Vue } from "./install";
 
 class VueRouter {
   constructor(options) {
     // 用户传递的路由配置，可对其进行一个路由映射
     let routes = options.routes;
+
+    this.matcher = createMatcher(routes);
+
+    let mode = options.mode || "hash";
+    if (mode === "hash") {
+      this.history = new HashHistory(this);
+    } else if (mode === "history") {
+      this.history = new BrowserHistory(this);
+    }
+  }
+
+  match(location) {
+    return this.matcher.match(location);
+  }
+
+  push(location) {
+    this.history.transitionTo(location);
+  }
+
+  init(app) {
+    let history = this.history;
+    history.transitionTo(history.getCurrentLocation(), () => {
+      history.setupListener(); // 监听路由的变化
+    });
   }
 }
 
