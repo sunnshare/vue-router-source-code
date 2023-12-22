@@ -13,6 +13,12 @@ class BrowserHistory extends Base {
   getCurrentLocation() {
     return window.location.pathname;
   }
+
+  push(location) {
+    this.transitionTo(location, () => {
+      history.pushState({}, "", location);
+    });
+  }
 }
 
 export default BrowserHistory;

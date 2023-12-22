@@ -7,6 +7,7 @@ class VueRouter {
   constructor(options) {
     // 用户传递的路由配置，可对其进行一个路由映射
     let routes = options.routes;
+    this.beforeEachHooks = [];
 
     this.matcher = createMatcher(routes);
 
@@ -23,9 +24,11 @@ class VueRouter {
   }
 
   push(location) {
-    this.history.transitionTo(location, () => {
-      window.location.hash = location;
-    });
+    return this.history.push(location);
+  }
+
+  beforeEach(cb) {
+    this.beforeEachHooks.push(cb);
   }
 
   init(app) {

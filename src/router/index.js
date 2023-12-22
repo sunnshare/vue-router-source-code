@@ -72,4 +72,18 @@ router.matcher.addRoutes([
   },
 ]);
 
+router.beforeEach((from, to, next) => {
+  setTimeout(() => {
+    console.log(from.path, to, 1);
+    next();
+  }, 1000);
+});
+
+router.beforeEach((from, to, next) => {
+  setTimeout(() => {
+    console.log(from.path, to, 2);
+    next();
+  }, 1000);
+});
+
 export default router;
