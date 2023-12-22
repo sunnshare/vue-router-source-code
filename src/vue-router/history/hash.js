@@ -21,7 +21,7 @@ class HashHistory extends Base {
 
   setupListener() {
     window.addEventListener("hashchange", () => {
-      console.log(getHash());
+      this.transitionTo(getHash());
     });
   }
 

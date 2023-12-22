@@ -6,7 +6,7 @@ class BrowserHistory extends Base {
   }
   setupListener() {
     window.addEventListener("popstate", () => {
-      console.log(window.location.pathname);
+      this.transitionTo(window.location.pathname);
     });
   }
 

@@ -23,13 +23,19 @@ class VueRouter {
   }
 
   push(location) {
-    this.history.transitionTo(location);
+    this.history.transitionTo(location, () => {
+      window.location.hash = location;
+    });
   }
 
   init(app) {
     let history = this.history;
     history.transitionTo(history.getCurrentLocation(), () => {
       history.setupListener(); // 监听路由的变化
+    });
+
+    history.listen((newRoute) => {
+      app._route = newRoute;
     });
   }
 }
